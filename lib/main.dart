@@ -4,9 +4,14 @@ import 'package:pokedexapp/config/router/app_router.dart';
 
 import 'package:pokedexapp/firebase_options.dart';
 import 'package:pokedexapp/services/provider.dart';
+import 'package:pokedexapp/user_preferences/user_preferences.dart';
 
 Future<void> main() async {
+ 
+
   WidgetsFlutterBinding.ensureInitialized();
+   final prefs = UserPreferences();
+  await prefs.initPrefs();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -20,11 +25,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Provider(
-        child: MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      title: 'Pokedex',
-      routerConfig: appRouter,
-    ),
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        title: 'Pokedex',
+        routerConfig: appRouter,
+      ),
     );
   }
-} 
+}

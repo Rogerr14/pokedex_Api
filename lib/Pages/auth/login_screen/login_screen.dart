@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:pokedexapp/bloc/login_bloc.dart';
 import 'package:pokedexapp/services/provider.dart';
 import 'package:pokedexapp/services/usuario_provider.dart';
+import 'package:pokedexapp/validators/utils.dart';
 
 import 'package:pokedexapp/widgets/textform_widget.dart';
 
@@ -81,11 +82,13 @@ class _FormLogin extends StatelessWidget {
     );
   }
 
-  _login(
-      LoginBloc bloc, BuildContext context, UsuarioProvider usuarioProvider) {
-    usuarioProvider.login(bloc.email, bloc.password);
-
-    context.pushReplacement('/homeScreen');
+  _login(LoginBloc bloc, BuildContext context,
+      UsuarioProvider usuarioProvider) async {
+    final Map<String, dynamic> info =
+        await usuarioProvider.login(bloc.email, bloc.password);
+    if (context.mounted) {
+      (info['ok']) ? context.pushReplacement('/homeScreen') : showAlert(context, info['mensaje']);
+    }
   }
 }
 
