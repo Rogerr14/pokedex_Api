@@ -6,9 +6,9 @@ import 'package:pokedexapp/services/usuario_provider.dart';
 
 import 'package:pokedexapp/widgets/textform_widget.dart';
 
-class LoginScreen extends StatelessWidget {
-  static String name = 'loginScreen';
-  const LoginScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  static String name = 'registerScreen';
+  const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +36,7 @@ class _FormLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     final usuarioProvider = UsuarioProvider();
     final bloc = Provider.of(context);
+
     final heightSize = MediaQuery.sizeOf(context).height;
     return Center(
       child: Container(
@@ -43,7 +44,7 @@ class _FormLogin extends StatelessWidget {
         child: Column(
           children: [
             const Text(
-              'LOGIN',
+              'REGISTRO',
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
             const SizedBox(
@@ -64,28 +65,22 @@ class _FormLogin extends StatelessWidget {
                 builder: (context, snapshot) {
                   return OutlinedButton(
                     onPressed: (snapshot.hasData)
-                        ? () => _login(bloc, context, usuarioProvider)
+                        ? () => _register(bloc, context, usuarioProvider)
                         : null,
-                    child: const Text('Ingresar'),
+                    child: const Text('Registrarse'),
                   );
                 }),
-            const SizedBox(
-              height: 20,
-            ),
             TextButton(
-                onPressed: () => context.pushReplacement('/registerScreen'),
-                child: const Text('¿Aun no tienes cuenta?, Registrate'))
+                onPressed: () => context.pushReplacement('/'),
+                child: const Text('¿Ya tienes cuenta?, Inicia Sesion'))
           ],
         ),
       ),
     );
   }
 
-  _login(
-      LoginBloc bloc, BuildContext context, UsuarioProvider usuarioProvider) {
-    usuarioProvider.login(bloc.email, bloc.password);
-
-    context.pushReplacement('/homeScreen');
+  _register(LoginBloc bloc, BuildContext context,UsuarioProvider usuarioProvider) {
+    usuarioProvider.nuevoUsuario(bloc.email, bloc.password);
   }
 }
 

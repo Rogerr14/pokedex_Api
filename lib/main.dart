@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:pokedexapp/config/router/app_router.dart';
 
-
-import 'package:pokedexapp/Pages/auth/login_screen/login_screen.dart';
 import 'package:pokedexapp/firebase_options.dart';
+import 'package:pokedexapp/services/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,11 +19,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-    return const  MaterialApp(
+    return Provider(
+        child: MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'Material App',
-      home:  LoginScreen()
+      title: 'Pokedex',
+      routerConfig: appRouter,
+    ),
     );
   }
-}
+} 
